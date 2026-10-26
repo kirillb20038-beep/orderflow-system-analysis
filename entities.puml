@@ -1,0 +1,34 @@
+@startuml
+hide methods
+skinparam classAttributeIconSize 0
+
+class products {
+  +id: BIGINT <<PK>>
+  name: VARCHAR
+  description: TEXT
+  price: NUMERIC
+  stock_quantity: INTEGER
+  is_active: BOOLEAN
+}
+
+class orders {
+  +id: BIGINT <<PK>>
+  status: VARCHAR
+  total_amount: NUMERIC
+  idempotency_key: VARCHAR <<UQ>>
+  request_hash: VARCHAR
+  created_at: TIMESTAMPTZ
+}
+
+class order_items {
+  +id: BIGINT <<PK>>
+  order_id: BIGINT <<FK>>
+  product_id: BIGINT <<FK>>
+  quantity: INTEGER
+  unit_price: NUMERIC
+  line_total: NUMERIC
+}
+
+orders "1" -- "1..*" order_items : contains
+products "1" -- "0..*" order_items : referenced by
+@enduml

@@ -1,0 +1,9 @@
+stateDiagram-v2
+    [*] --> NEW: Заказ создан
+    NEW --> CANCELLED: Отмена успешна
+    CANCELLED --> [*]
+    note right of CANCELLED
+      Повторная отмена запрещена.
+      Остаток восстанавливается
+      только при первом переходе.
+    end note
